@@ -2,9 +2,12 @@ package br.com.paulo.biblioteca.sistema.usuarios;
 
 import br.com.paulo.biblioteca.sistema.livros.Livro;
 
+import java.util.Objects;
+
 public class Usuario {
     private String nome;
     private int idUsuario;
+    private int livrosPosse;
 
     public Usuario(String nome, int idUsuario){
         this.nome = nome;
@@ -12,10 +15,37 @@ public class Usuario {
     }
 
     public void emprestarLivro(Livro livro){
-        livro.emprestarLivro();
+        if(verificadorPosseLivro("emprestimo")) {
+            this.livrosPosse++;
+            livro.emprestarLivro();
+        }
     }
 
     public void devolverLivro(Livro livro){
-        livro.devolverLivro();
+        if( verificadorPosseLivro("devolucao")) {
+            this.livrosPosse--;
+            livro.devolverLivro();
+        }
+    }
+
+    public void detalhesUsuario() {
+        System.out.println(
+                "Id: " +this.idUsuario +
+                "\nNome: " + this.nome +
+                "\nLivros em posse: " + this.livrosPosse
+        );
+    }
+
+    private Boolean verificadorPosseLivro(String tipoOperacao){ //emprestimo ou devolucao
+
+
+        if (this.livrosPosse < 3 && Objects.equals(tipoOperacao, "emprestimo")){
+            return true;
+        } else if (this.livrosPosse > 0 && Objects.equals(tipoOperacao, "devolucao")){
+            return true;
+        } else {
+            System.out.printf("Limite atingido para a operação %s ser concluída\n", tipoOperacao);
+            return false;
+        }
     }
 }
