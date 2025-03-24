@@ -73,13 +73,12 @@ public class Biblioteca {
 
         System.out.println("Selecione o usuario:");
         int usuarioIndece = scanner.nextInt();
-        System.out.println(usuarioIndece);
 
         if (usuarioIndece >=0 && usuarioIndece <= listaUsuario.size()){
             return listaUsuario.get(usuarioIndece-1);
         } else {
             System.out.println("Usuario não identificado");
+            return null;
         }
-        return null;
     }
 }

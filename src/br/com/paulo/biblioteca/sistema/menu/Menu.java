@@ -66,13 +66,13 @@ public class Menu {
 
     private Livro registroLivro(){
         System.out.println("Qual o Titulo do livro");
-        String tituloLivro = this.scanner.nextLine();
+        String tituloLivro = scanner.nextLine();
 
         System.out.println("Qual o autor do Livro: ");
-        String autorLivro = this.scanner.nextLine();
+        String autorLivro = scanner.nextLine();
 
         System.out.println("Qual o Ano de Publicação do Livro: ");
-        int anoPlubLivro = this.scanner.nextInt();
+        int anoPlubLivro = scanner.nextInt();
 
         return new Livro(tituloLivro,autorLivro, anoPlubLivro);
     }
@@ -80,7 +80,7 @@ public class Menu {
     private Usuario registroUsuario(){
 
         System.out.println("Nome do usuário: ");
-        String nome = this.scanner.nextLine();
+        String nome = scanner.nextLine();
 
         this.idUsuario++;
 
