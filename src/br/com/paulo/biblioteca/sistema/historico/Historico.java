@@ -17,8 +17,8 @@ public class Historico {
 
         return "Usuario: " + nomeUsuario +
                 "\nTitulo Livro: " + tituloLivro+
-                "\nAutor Livro :"+ autorLivro+
-                "\nOperação :"+ tipoOperacao+
+                "\nAutor Livro: "+ autorLivro+
+                "\nOperação: "+ tipoOperacao+
                 "\n";
 
     }

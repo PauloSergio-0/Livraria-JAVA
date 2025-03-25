@@ -1,5 +1,6 @@
 package br.com.paulo.biblioteca.sistema.menu;
 
+import br.com.paulo.biblioteca.sistema.excecoes.LivroException;
 import br.com.paulo.biblioteca.sistema.historico.Historico;
 import br.com.paulo.biblioteca.sistema.livros.Biblioteca;
 import br.com.paulo.biblioteca.sistema.livros.Livro;
@@ -43,11 +44,17 @@ public class Menu {
             } else if (opcao == 2) {
                 sistemaBiblioteca.adcionarUsuario(registroUsuario());
             } else if (opcao == 3){
-                Usuario user = sistemaBiblioteca.itemsListaUsuario();
-                Livro livro = sistemaBiblioteca.itemsListaLivro();
-                Historico movimentacao = new Historico(user.getNome(),livro.getTitulo(), livro.getAutor(), "Emprestimo");
-                user.emprestarLivro(livro);
-                sistemaBiblioteca.adcionarHistorico(movimentacao);
+
+                try {
+                    Usuario user = sistemaBiblioteca.itemsListaUsuario();
+                    Livro livro = sistemaBiblioteca.itemsListaLivro();
+                    Historico movimentacao = new Historico(user.getNome(),livro.getTitulo(), livro.getAutor(), "Emprestimo");
+
+                    user.emprestarLivro(livro);
+                    sistemaBiblioteca.adcionarHistorico(movimentacao);
+                }catch (LivroException e){
+                    System.err.println("Erro ao emprestar livro: "+ e.getMessage());
+                }
 
             } else if (opcao == 4){
                 Usuario user = sistemaBiblioteca.itemsListaUsuario();

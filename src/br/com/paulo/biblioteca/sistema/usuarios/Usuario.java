@@ -1,5 +1,6 @@
 package br.com.paulo.biblioteca.sistema.usuarios;
 
+import br.com.paulo.biblioteca.sistema.excecoes.LivroException;
 import br.com.paulo.biblioteca.sistema.livros.Livro;
 
 import java.util.Objects;
@@ -18,7 +19,11 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    public void emprestarLivro(Livro livro){
+    public void emprestarLivro(Livro livro) throws LivroException {
+        if(!livro.isDisponivel()){
+            throw new LivroException(livro);
+        }
+
         if(verificadorPosseLivro("emprestimo")) {
             this.livrosPosse++;
             livro.emprestarLivro();

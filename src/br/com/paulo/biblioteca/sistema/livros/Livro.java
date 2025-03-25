@@ -14,6 +14,10 @@ public class Livro{
         return titulo;
     }
 
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
     public Livro(String titulo, String autor, int anoPublicacoo){
         this.titulo = titulo;
         this.autor = autor;
