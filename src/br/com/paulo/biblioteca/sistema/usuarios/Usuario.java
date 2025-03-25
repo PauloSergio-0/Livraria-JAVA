@@ -21,7 +21,7 @@ public class Usuario {
 
     public void emprestarLivro(Livro livro) throws LivroException {
         if(!livro.isDisponivel()){
-            throw new LivroException(livro);
+            throw new LivroException(livro,"emprestado");
         }
 
         if(verificadorPosseLivro("emprestimo")) {
@@ -30,7 +30,10 @@ public class Usuario {
         }
     }
 
-    public void devolverLivro(Livro livro){
+    public void devolverLivro(Livro livro) throws LivroException{
+        if(livro.isDisponivel()){
+            throw  new LivroException(livro, "devolvido");
+        }
         if( verificadorPosseLivro("devolucao")) {
             this.livrosPosse--;
             livro.devolverLivro();

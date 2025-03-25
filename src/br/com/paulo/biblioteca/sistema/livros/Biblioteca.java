@@ -3,6 +3,7 @@ package br.com.paulo.biblioteca.sistema.livros;
 import java.util.Scanner;
 import java.util.Locale;
 
+import br.com.paulo.biblioteca.sistema.excecoes.ListaVazia;
 import br.com.paulo.biblioteca.sistema.historico.Historico;
 import br.com.paulo.biblioteca.sistema.usuarios.Usuario;
 import java.util.ArrayList;
@@ -34,7 +35,11 @@ public class Biblioteca {
         System.out.println("Livro Adicionado!");
     }
 
-    public Livro itemsListaLivro(){
+    public Livro itemsListaLivro() throws ListaVazia{
+        if(listaLivro.isEmpty()){
+            throw new ListaVazia("livro");
+        }
+
         for(int i = 1; i <= listaLivro.size(); i++){
 
             System.out.println("id: " + i);
@@ -60,16 +65,17 @@ public class Biblioteca {
     }
 
 
-    public void listarLivros(){
-        if(!listaLivro.isEmpty()) {
-            System.out.println("Lista de livros");
-            for (Livro livro : listaLivro) {
-
-                System.out.println(livro.exibirDetalhes());
-            }
-        }else {
-            System.out.println("Não há usuario");
+    public void listarLivros() throws ListaVazia {
+        if(listaLivro.isEmpty()){
+            throw new ListaVazia("livro");
         }
+
+        System.out.println("Lista de livros");
+        for (Livro livro : listaLivro) {
+
+            System.out.println(livro.exibirDetalhes());
+        }
+
     }
 
     public void adcionarUsuario(Usuario usuario){
@@ -93,7 +99,12 @@ public class Biblioteca {
         }
     }
 
-    public Usuario itemsListaUsuario(){
+    public Usuario itemsListaUsuario() throws ListaVazia{
+
+        if(listaUsuario.isEmpty()){
+            throw new ListaVazia("Usuário");
+        }
+
         for (int i = 1; i <= listaUsuario.size(); i++){
             listaUsuario.get(i-1).detalhesUsuario();
         }

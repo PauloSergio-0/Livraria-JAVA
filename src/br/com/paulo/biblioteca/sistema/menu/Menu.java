@@ -1,5 +1,6 @@
 package br.com.paulo.biblioteca.sistema.menu;
 
+import br.com.paulo.biblioteca.sistema.excecoes.ListaVazia;
 import br.com.paulo.biblioteca.sistema.excecoes.LivroException;
 import br.com.paulo.biblioteca.sistema.historico.Historico;
 import br.com.paulo.biblioteca.sistema.livros.Biblioteca;
@@ -22,15 +23,15 @@ public class Menu {
             System.out.println(
                     """
                             Menu:\s
-                            1. adcionar Livro
-                            2. adcionar Usuario
-                            3. Emprentar livro
-                            4. Devolver livro
-                            5. exibir detalhes do livro
-                            6. listar livros
-                            7. listar usuarios
-                            8. listar movimentacoes
-                            9.remover livro
+                             1. adcionar Livro
+                             2. adcionar Usuario
+                             3. Emprentar livro
+                             4. Devolver livro
+                             5. exibir detalhes do livro
+                             6. listar livros
+                             7. listar usuarios
+                             8. listar movimentacoes
+                             9. remover livro
                             10. remover usuario
                             11. sair
                            \s"""
@@ -52,28 +53,49 @@ public class Menu {
 
                     user.emprestarLivro(livro);
                     sistemaBiblioteca.adcionarHistorico(movimentacao);
-                }catch (LivroException e){
+                }catch (Exception e){
                     System.err.println("Erro ao emprestar livro: "+ e.getMessage());
                 }
 
             } else if (opcao == 4){
-                Usuario user = sistemaBiblioteca.itemsListaUsuario();
-                Livro livro = sistemaBiblioteca.itemsListaLivro();
-                Historico movimentacao = new Historico(user.getNome(),livro.getTitulo(), livro.getAutor(), "Devolução");
-                user.devolverLivro(livro);
-                sistemaBiblioteca.adcionarHistorico(movimentacao);
+                try {
+                    Usuario user = sistemaBiblioteca.itemsListaUsuario();
+                    Livro livro = sistemaBiblioteca.itemsListaLivro();
+                    Historico movimentacao = new Historico(user.getNome(), livro.getTitulo(), livro.getAutor(), "Devolução");
+                    user.devolverLivro(livro);
+                    sistemaBiblioteca.adcionarHistorico(movimentacao);
+                } catch (Exception e){
+                    System.err.println(e.getMessage());
+                }
             } else if (opcao == 5) {
-                sistemaBiblioteca.itemsListaLivro().exibirDetalhes();
+                try {
+                    sistemaBiblioteca.itemsListaLivro().exibirDetalhes();
+                }catch(Exception e){
+                    System.err.println(e.getMessage());
+                }
             } else if (opcao== 6) {
-                sistemaBiblioteca.listarLivros();
+                try {
+
+                    sistemaBiblioteca.listarLivros();
+                } catch (Exception e) {
+                   System.err.println(e.getMessage());
+                }
             } else if (opcao == 7) {
                 sistemaBiblioteca.listarUsuarios();
             } else if (opcao == 8){
                 sistemaBiblioteca.listaMovimentcoes();
             } else if (opcao == 9) {
-                sistemaBiblioteca.removerLivro(sistemaBiblioteca.itemsListaLivro());
+                try {
+                    sistemaBiblioteca.removerLivro(sistemaBiblioteca.itemsListaLivro());
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
             } else if (opcao == 10) {
-                sistemaBiblioteca.removerUsuario(sistemaBiblioteca.itemsListaUsuario());
+                try {
+                    sistemaBiblioteca.removerUsuario(sistemaBiblioteca.itemsListaUsuario());
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
             } else if (opcao == 11){
                 System.out.println("Saindo do sistema");
                 break;
