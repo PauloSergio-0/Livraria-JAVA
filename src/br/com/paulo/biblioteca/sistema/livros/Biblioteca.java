@@ -1,5 +1,6 @@
 package br.com.paulo.biblioteca.sistema.livros;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Locale;
 
@@ -46,15 +47,23 @@ public class Biblioteca {
             System.out.println(listaLivro.get(i-1).exibirDetalhes());
         }
         while (true) {
-            System.out.println("Selecione o livro?");
-            int livroIndece = scanner.nextInt();
+            int livroIndece = 0;
+            try{
+                System.out.println("Selecione o livro?");
+                livroIndece = scanner.nextInt();
 
-            if (livroIndece <= listaLivro.size() && livroIndece > 0) {
-                return listaLivro.get(livroIndece - 1);
-            } else {
-                System.out.println("O indece não encontrado: id " + livroIndece);
+                if (livroIndece <= listaLivro.size() && livroIndece > 0) {
+                    return listaLivro.get(livroIndece - 1);
+                } else {
+                    System.out.println("O indece não encontrado: id " + livroIndece);
+
+                }
+            } catch (InputMismatchException e){
+                System.err.println("Error: adicionar um valor do tipo inteiro para acessar as opções");
+                scanner.nextLine();
 
             }
+
         }
     }
 
@@ -84,8 +93,12 @@ public class Biblioteca {
     }
 
     public void removerUsuario(Usuario usuario){
-        listaUsuario.remove(usuario);
-        System.out.println("Usuario Removido!");
+        if(usuario.getLivrosPosse() ==0) {
+            listaUsuario.remove(usuario);
+            System.out.println("Usuario Removido!");
+        } else {
+            System.out.println("O usuario "+ usuario.getNome() + " ainda tem livros a devolver");
+        }
     }
 
     public void listarUsuarios(){
@@ -109,15 +122,21 @@ public class Biblioteca {
             listaUsuario.get(i-1).detalhesUsuario();
         }
         while (true) {
+            int usuarioIndece= 0;
+        try{
             System.out.println("Selecione o usuario:");
-            int usuarioIndece = scanner.nextInt();
-
-            if (usuarioIndece >= 0 && usuarioIndece <= listaUsuario.size()) {
+            usuarioIndece = scanner.nextInt();
+            if (usuarioIndece > 0 && usuarioIndece <= listaUsuario.size()) {
                 return listaUsuario.get(usuarioIndece - 1);
             } else {
                 System.out.println("Usuario não identificado");
 
             }
+        } catch (InputMismatchException e){
+            System.err.println("Error: adicionar um valor do tipo inteiro para acessar as opções");
+            scanner.nextLine();
+
+        }
         }
     }
 }

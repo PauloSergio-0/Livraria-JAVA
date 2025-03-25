@@ -1,12 +1,11 @@
 package br.com.paulo.biblioteca.sistema.menu;
 
-import br.com.paulo.biblioteca.sistema.excecoes.ListaVazia;
-import br.com.paulo.biblioteca.sistema.excecoes.LivroException;
 import br.com.paulo.biblioteca.sistema.historico.Historico;
 import br.com.paulo.biblioteca.sistema.livros.Biblioteca;
 import br.com.paulo.biblioteca.sistema.livros.Livro;
 import br.com.paulo.biblioteca.sistema.usuarios.Usuario;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Locale;
 
@@ -18,6 +17,7 @@ public class Menu {
 
     public void menuSistema() {
         Biblioteca sistemaBiblioteca = new Biblioteca();
+        int opcao = 0;
 
         while (true) {
             System.out.println(
@@ -36,9 +36,19 @@ public class Menu {
                             11. sair
                            \s"""
             );
-            System.out.println("Escolha uma opçao:");
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
+
+
+
+            try {
+                System.out.println("Escolha uma opçao:");
+                opcao = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e){
+                System.err.println("Error: adicionar um valor do tipo inteiro para acessar as opções");
+                scanner.nextLine();
+            }
+
+
 
             if (opcao == 1) {
                 sistemaBiblioteca.adcionarLivro(registroLivro());

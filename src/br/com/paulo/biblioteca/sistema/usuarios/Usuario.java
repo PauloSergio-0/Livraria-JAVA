@@ -14,6 +14,10 @@ public class Usuario {
         return nome;
     }
 
+    public int getLivrosPosse() {
+        return livrosPosse;
+    }
+
     public Usuario(String nome, int idUsuario){
         this.nome = nome;
         this.idUsuario = idUsuario;
