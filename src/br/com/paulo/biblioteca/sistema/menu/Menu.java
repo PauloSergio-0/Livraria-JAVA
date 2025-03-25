@@ -1,5 +1,6 @@
 package br.com.paulo.biblioteca.sistema.menu;
 
+import br.com.paulo.biblioteca.sistema.historico.Historico;
 import br.com.paulo.biblioteca.sistema.livros.Biblioteca;
 import br.com.paulo.biblioteca.sistema.livros.Livro;
 import br.com.paulo.biblioteca.sistema.usuarios.Usuario;
@@ -10,7 +11,7 @@ import java.util.Locale;
 
 
 public class Menu {
-    private static Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
+    private static final Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
     private int idUsuario;
 
     public void menuSistema() {
@@ -27,9 +28,10 @@ public class Menu {
                             5. exibir detalhes do livro
                             6. listar livros
                             7. listar usuarios
-                            8. remover livro
-                            9. remover usuario
-                            10. sair
+                            8. listar movimentacoes
+                            9.remover livro
+                            10. remover usuario
+                            11. sair
                            \s"""
             );
             System.out.println("Escolha uma opçao:");
@@ -41,10 +43,18 @@ public class Menu {
             } else if (opcao == 2) {
                 sistemaBiblioteca.adcionarUsuario(registroUsuario());
             } else if (opcao == 3){
-                sistemaBiblioteca.itemsUsuario().emprestarLivro(sistemaBiblioteca.itemsListaLivro());
+                Usuario user = sistemaBiblioteca.itemsListaUsuario();
+                Livro livro = sistemaBiblioteca.itemsListaLivro();
+                Historico movimentacao = new Historico(user.getNome(),livro.getTitulo(), livro.getAutor(), "Emprestimo");
+                user.emprestarLivro(livro);
+                sistemaBiblioteca.adcionarHistorico(movimentacao);
 
             } else if (opcao == 4){
-                sistemaBiblioteca.itemsUsuario().devolverLivro(sistemaBiblioteca.itemsListaLivro());
+                Usuario user = sistemaBiblioteca.itemsListaUsuario();
+                Livro livro = sistemaBiblioteca.itemsListaLivro();
+                Historico movimentacao = new Historico(user.getNome(),livro.getTitulo(), livro.getAutor(), "Devolução");
+                user.devolverLivro(livro);
+                sistemaBiblioteca.adcionarHistorico(movimentacao);
             } else if (opcao == 5) {
                 sistemaBiblioteca.itemsListaLivro().exibirDetalhes();
             } else if (opcao== 6) {
@@ -52,10 +62,12 @@ public class Menu {
             } else if (opcao == 7) {
                 sistemaBiblioteca.listarUsuarios();
             } else if (opcao == 8){
-                sistemaBiblioteca.removerLivro(sistemaBiblioteca.itemsListaLivro());
+                sistemaBiblioteca.listaMovimentcoes();
             } else if (opcao == 9) {
-                sistemaBiblioteca.removerUsuario(sistemaBiblioteca.itemsUsuario());
-            } else if (opcao == 10){
+                sistemaBiblioteca.removerLivro(sistemaBiblioteca.itemsListaLivro());
+            } else if (opcao == 10) {
+                sistemaBiblioteca.removerUsuario(sistemaBiblioteca.itemsListaUsuario());
+            } else if (opcao == 11){
                 System.out.println("Saindo do sistema");
                 break;
             } else {

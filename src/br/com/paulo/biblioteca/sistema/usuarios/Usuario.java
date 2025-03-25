@@ -5,9 +5,13 @@ import br.com.paulo.biblioteca.sistema.livros.Livro;
 import java.util.Objects;
 
 public class Usuario {
-    private String nome;
-    private int idUsuario;
+    private final String nome;
+    private final int idUsuario;
     private int livrosPosse;
+
+    public String getNome() {
+        return nome;
+    }
 
     public Usuario(String nome, int idUsuario){
         this.nome = nome;
