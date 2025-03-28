@@ -1,5 +1,6 @@
 package br.com.paulo.biblioteca.sistema.menu;
 
+import br.com.paulo.biblioteca.sistema.excecoes.AnoError;
 import br.com.paulo.biblioteca.sistema.historico.Historico;
 import br.com.paulo.biblioteca.sistema.livros.Biblioteca;
 import br.com.paulo.biblioteca.sistema.livros.Livro;
@@ -51,7 +52,11 @@ public class Menu {
 
 
             if (opcao == 1) {
-                sistemaBiblioteca.adcionarLivro(registroLivro());
+                try {
+                    sistemaBiblioteca.adcionarLivro(registroLivro());
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
             } else if (opcao == 2) {
                 sistemaBiblioteca.adcionarUsuario(registroUsuario());
             } else if (opcao == 3){
@@ -115,7 +120,7 @@ public class Menu {
         }
     }
 
-    private Livro registroLivro(){
+    private Livro registroLivro() throws AnoError {
         System.out.println("Qual o Titulo do livro");
         String tituloLivro = scanner.nextLine();
 
@@ -124,6 +129,10 @@ public class Menu {
 
         System.out.println("Qual o Ano de Publicação do Livro: ");
         int anoPlubLivro = scanner.nextInt();
+
+        if (anoPlubLivro <1){
+            throw new AnoError(anoPlubLivro);
+        }
 
         return new Livro(tituloLivro,autorLivro, anoPlubLivro);
     }
